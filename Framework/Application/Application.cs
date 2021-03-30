@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Automation;
 using NLog;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
@@ -34,6 +35,23 @@ namespace Framework.Application
         {
             _applicationWindow.Keyboard.HoldKey(KeyboardInput.SpecialKeys.CONTROL);
             _applicationWindow.Keyboard.Enter("O");
+        }
+
+        public Window getLastOpenedWindow()
+        {
+            return
+                application.GetWindows().Last();
+        }
+
+        public void EnterFileNameToFileModalWindow(string text)
+        {
+            Window window = getLastOpenedWindow();
+
+            TextBox textField = window.Get<TextBox>(SearchCriteria.ByControlType(ControlType.Edit).AndByText("File name:"));
+            textField.Text = text;
+
+            Button openButton = window.Get<Button>(SearchCriteria.ByControlType(ControlType.Button).AndByText("Open"));
+            openButton.Click();
         }
 
         public void Run()

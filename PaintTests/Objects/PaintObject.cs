@@ -24,10 +24,7 @@ namespace PaintTests.Objects
         public void ClickOnLoadMenuItem()
         {
             application.OpenProjectTub();
-            textBox = new TextBox(application,"1148");
-            textBox.EnterText(@"C:\Users\d.stavitsky\Downloads\test.jpg");
-            Thread.Sleep(10000);
-            new Button(application, "1").click();
+            application.EnterFileNameToFileModalWindow("TEST");
         }
 
         public void ClickOnOpenMenuItem()

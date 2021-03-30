@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.WindowItems;
 
 namespace Framework.Elements
 {
@@ -36,8 +37,8 @@ namespace Framework.Elements
 
         public void EnterText(string text)
         {
-            var textBox = application.getApplicationWindow()
-                .Get<TestStack.White.UIItems.TextBox>(SearchCriteria.ByAutomationId(elementID));
+            Window window = application.getLastOpenedWindow();
+            var textBox = window.Get<TestStack.White.UIItems.TextBox>(SearchCriteria.ByAutomationId(elementID));
             textBox.Enter(text);
         }
     }
