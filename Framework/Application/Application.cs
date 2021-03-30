@@ -7,6 +7,7 @@ using NLog;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowItems;
+using TestStack.White.WindowsAPI;
 
 namespace Framework.Application
 {
@@ -14,7 +15,7 @@ namespace Framework.Application
     {
         private static ILogger logger = LogManager.GetCurrentClassLogger();
         private TestStack.White.Application application;
-        private Window applicationWindow;
+        private Window _applicationWindow;
         private string applicationPath;
         private string applicationWindowName;
 
@@ -24,12 +25,23 @@ namespace Framework.Application
             this.applicationWindowName = applicationWindowName;
         }
 
+        public Application(string applicationWindowName)
+        {
+            this.applicationWindowName = applicationWindowName;
+        }
+
+        public void OpenProjectTub()
+        {
+            _applicationWindow.Keyboard.HoldKey(KeyboardInput.SpecialKeys.CONTROL);
+            _applicationWindow.Keyboard.Enter("O");
+        }
+
         public void Run()
         {
             logger.Debug($"Starting Application (Path = {applicationPath}, Window Name = {applicationWindowName})");
 
             application = TestStack.White.Application.Launch(applicationPath);
-            applicationWindow = application.GetWindow(applicationWindowName);
+            _applicationWindow = application.GetWindow(applicationWindowName);
 
             logger.Info("Application is running...");
         }
@@ -38,7 +50,7 @@ namespace Framework.Application
         {
             logger.Debug($"Returning button (with text = {elementText})");
 
-            var button = applicationWindow.Get<Button>(SearchCriteria.ByText(elementText));
+            var button = _applicationWindow.Get<Button>(SearchCriteria.ByText(elementText));
             return new Elements.Button(this, button.Id);
         }
 
@@ -46,7 +58,7 @@ namespace Framework.Application
         {
             logger.Debug($"Returning button (with text = {elementText})");
 
-            var button = applicationWindow.Get<TextBox>(SearchCriteria.ByText(elementText));
+            var button = _applicationWindow.Get<TextBox>(SearchCriteria.ByText(elementText));
             return new Elements.TextBox(this, button.Id);
         }
 
@@ -54,7 +66,7 @@ namespace Framework.Application
         {
             logger.Debug($"Returning menuItem (with path = {path})");
 
-            var menu = applicationWindow.MenuBar.MenuItem(path);
+            var menu = _applicationWindow.MenuBar.MenuItem(path);
             return new Elements.MenuItem(this, menu.Id, path);
         }
 
@@ -63,13 +75,14 @@ namespace Framework.Application
             logger.Debug($"Closing the application");
 
             application.Close();
+            application.Dispose();
 
             logger.Info($"Application was closed");
         }
 
         public Window getApplicationWindow()
         {
-            return applicationWindow;
+            return _applicationWindow;
         }
     }
 }
