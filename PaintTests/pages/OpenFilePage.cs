@@ -12,7 +12,7 @@ using TestStack.White.UIItems.WindowItems;
 using Button = Framework.elements.Button;
 using TextBox = Framework.elements.TextBox;
 
-namespace Framework.pages
+namespace PaintTests.pages
 {
     public class OpenFilePage
     {

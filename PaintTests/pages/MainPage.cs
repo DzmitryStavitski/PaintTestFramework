@@ -5,7 +5,7 @@ using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
 using Button = Framework.elements.Button;
 
-namespace Framework.pages
+namespace PaintTests.pages
 {
     public class MainPage
     {
@@ -15,7 +15,8 @@ namespace Framework.pages
             Button.Get(SearchCriteria.ByAutomationId("Close"));
         public static Button ButtonDoNotSave =>
             Button.Get(SearchCriteria.ByAutomationId("CommandButton_7"), App.GetApplication().GetWindow().ModalWindow("Paint"));
-        public static MenuItem MenuItemSelectAll => MenuItem.Get(SearchCriteria.ByControlType(ControlType.MenuItem).AndByText("Select all"), "Select all");
+        public static MenuItem MenuItemSelectAll => 
+            MenuItem.Get(SearchCriteria.ByControlType(ControlType.MenuItem).AndByText("Select all"), "Select all");
         public static UIItem ButtonSelect => BaseElement<TestStack.White.UIItems.Button>.
             FindItemByIndex(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "Select"), 2);
         public static Button ButtonCut =>

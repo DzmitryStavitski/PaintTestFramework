@@ -33,4 +33,9 @@
     <ProjectReference Include="..\Framework\Framework.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
+  </ItemGroup>
+
 </Project>

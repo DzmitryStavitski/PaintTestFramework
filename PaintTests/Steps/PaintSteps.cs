@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Drawing;
 using System.IO;
-using System.Threading;
-using Framework.Application;
 using TechTalk.SpecFlow;
-using Framework.pages;
+using Framework.utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PaintTests.pages;
 
 namespace PaintTests.Steps
 {
@@ -27,12 +26,15 @@ namespace PaintTests.Steps
         [When(@"I open an image ""(.*)"" from ""(.*)""")]
         public void WhenIOpenAnImageFrom(string imageName, string path)
         {
+            string imageFullPath = Path.Combine(path, imageName);
+            Bitmap image = new Bitmap(Image.FromFile(imageFullPath));
+            
+            ScenarioContext.Current.Add("image", image);
+            ScenarioContext.Current.Add("imagePath", imageFullPath);
+
             MainPage.ButtonFile.Click();
-            Thread.Sleep(2000);
             FileMenuView.MenuItemOpen.Click();
-            Thread.Sleep(2000);
             OpenFilePage.TextBoxFilePath.BulkText(Path.Combine(path, imageName));
-            Thread.Sleep(2000);
             OpenFilePage.ButtonOpenFile.Click();
         }
 
@@ -40,20 +42,17 @@ namespace PaintTests.Steps
         public void WhenIClickButtonSelectAll()
         {
             MainPage.ButtonSelect.Click();
-            Thread.Sleep(2000);
             MainPage.MenuItemSelectAll.Click();
-            Thread.Sleep(2000);
         }
 
         [When(@"I click button cut")]
         public void WhenIClickButtonCut()
         {
             MainPage.ButtonCut.Click();
-            Thread.Sleep(2000);
         }
 
-        [When(@"I close app wihout saving")]
-        public void WhenICloseAppWihoutSaving()
+        [When(@"I close app without saving")]
+        public void WhenICloseAppWithoutSaving()
         {
             MainPage.ButtonClose.Click();
             MainPage.ButtonDoNotSave.Click();
@@ -62,7 +61,9 @@ namespace PaintTests.Steps
         [Then(@"image should not have changed")]
         public void ThenImageShouldNotHaveChanged()
         {
-            Assert.IsTrue(true);
+            Assert.IsTrue(ImageCompareUtil.CompareImages((Bitmap) ScenarioContext.Current["image"],
+                new Bitmap(Image.FromFile((string)ScenarioContext.Current["imagePath"]))));
+            Assert.IsTrue(true, "The original picture has changed.");
         }
     }
 }

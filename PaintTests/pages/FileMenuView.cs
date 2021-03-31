@@ -2,7 +2,7 @@
 using Framework.elements;
 using TestStack.White.UIItems.Finders;
 
-namespace Framework.pages
+namespace PaintTests.pages
 {
     public class FileMenuView
     {

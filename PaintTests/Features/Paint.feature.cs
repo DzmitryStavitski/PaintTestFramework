@@ -135,7 +135,7 @@ this.ScenarioInitialize(scenarioInfo);
   testRunner.And("I click button cut", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
-  testRunner.And("I close app wihout saving", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  testRunner.And("I close app without saving", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 10
  testRunner.Then("image should not have changed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
