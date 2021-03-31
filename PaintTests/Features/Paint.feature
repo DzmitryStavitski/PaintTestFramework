@@ -1,12 +1,10 @@
 ﻿Feature: Paint
 
-@mytag
-Scenario: ImageUploadTest
-	Given open the Paint
-	And load image
-	And close the Paint
-	#And click on Select menu
-	#And click on Select All
-	#And click Cut
-	#And close the Paint
-	#Then refuse to save reslut
+Scenario: Open image, cut it and closed without changes.
+	Given Paint is open
+		And all old instance were closed
+	When I open an image "test.jpg" from "C:\Users\d.stavitsky\Downloads"
+		And I click button select all
+		And I click button cut
+		And I close app wihout saving
+	Then image should not have changed

@@ -1,21 +1,24 @@
-﻿using TestStack.White.UIItems.Finders;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.WindowItems;
 
-namespace Framework.Elements
+namespace Framework.elements
 {
-    public class Button : BaseElement
+    public class Button : BaseElement<TestStack.White.UIItems.Button>
     {
-        public Button(Application.Application application, string elementID)
-            : base(application, elementID)
+
+        protected Button(TestStack.White.UIItems.Button uiItem) : base(uiItem)
         {
 
         }
 
-        public override void click()
+        public static Button Get(SearchCriteria searchCriteria, Window window = null)
         {
-            logger.Debug($"Clicking on Button (element ID = {elementID})");
-
-            var button = application.getApplicationWindow().Get<TestStack.White.UIItems.Button>(SearchCriteria.ByAutomationId(elementID.ToString()));
-            if (button != null) button.Click();
+            return new Button(Find(searchCriteria, window));
         }
     }
 }

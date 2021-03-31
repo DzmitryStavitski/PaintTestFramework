@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.MenuItems;
+using TestStack.White.UIItems.WindowItems;
 
-namespace Framework.Elements
+namespace Framework.elements
 {
-    public class MenuItem : BaseElement
+    public class MenuItem : BaseElement<Menu>
     {
-        private string[] path;
+        protected MenuItem(Menu uiItem, string itemName) : base(uiItem)
+        {
 
-        public MenuItem(Application.Application application, string elementID, params string[] path)
-            : base(application, elementID)
-        {
-            this.path = path;
         }
-        public override void click()
+
+        public static MenuItem Get(SearchCriteria searchCriteria, string itemName, Window window = null)
         {
-            logger.Debug($"Returning menuItem (with path = {path})");
-            var menu = application.getApplicationWindow().MenuBar.MenuItem(path[path.Length - 1]);
-            menu.Click();
+            return new MenuItem(Find(searchCriteria, window), itemName);
         }
     }
 }

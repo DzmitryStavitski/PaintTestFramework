@@ -1,55 +1,68 @@
 ﻿using System;
-using PaintTests.Objects;
+using System.IO;
+using System.Threading;
+using Framework.Application;
 using TechTalk.SpecFlow;
+using Framework.pages;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PaintTests.Steps
 {
     [Binding]
     public class PaintSteps
     {
-        private PaintObject _paint;
 
-        [Given(@"open the Paint")]
-        public void GivenOpenThePaint()
+        [Given(@"Paint is open")]
+        public void GivenPaintIsOpen()
         {
-            _paint = new PaintObject();
+            Assert.IsTrue(true);
         }
         
-        [Given(@"load image")]
-        public void GivenLoadImage()
+        [Given(@"all old instance were closed")]
+        public void GivenAllOldInstanceWereClosed()
         {
-            _paint.ClickOnLoadMenuItem();
-            //_paint.ClickOnOpenMenuItem();
+            Assert.IsTrue(true);
         }
         
-        [Given(@"click on Select menu")]
-        public void GivenClickOnSelectMenu()
+        [When(@"I open an image ""(.*)"" from ""(.*)""")]
+        public void WhenIOpenAnImageFrom(string imageName, string path)
         {
-            ScenarioContext.Current.Pending();
+            MainPage.ButtonFile.Click();
+            Thread.Sleep(2000);
+            FileMenuView.MenuItemOpen.Click();
+            Thread.Sleep(2000);
+            OpenFilePage.TextBoxFilePath.BulkText(Path.Combine(path, imageName));
+            Thread.Sleep(2000);
+            OpenFilePage.ButtonOpenFile.Click();
         }
-        
-        [Given(@"click on Select All")]
-        public void GivenClickOnSelectAll()
+
+        [When(@"I click button select all")]
+        public void WhenIClickButtonSelectAll()
         {
-            ScenarioContext.Current.Pending();
+            MainPage.ButtonSelect.Click();
+            Thread.Sleep(2000);
+            MainPage.MenuItemSelectAll.Click();
+            Thread.Sleep(2000);
         }
-        
-        [Given(@"click Cut")]
-        public void GivenClickCut()
+
+        [When(@"I click button cut")]
+        public void WhenIClickButtonCut()
         {
-            ScenarioContext.Current.Pending();
+            MainPage.ButtonCut.Click();
+            Thread.Sleep(2000);
         }
-        
-        [Given(@"close the Paint")]
-        public void GivenCloseThePaint()
+
+        [When(@"I close app wihout saving")]
+        public void WhenICloseAppWihoutSaving()
         {
-            _paint.Close();
+            MainPage.ButtonClose.Click();
+            MainPage.ButtonDoNotSave.Click();
         }
-        
-        [Then(@"refuse to save reslut")]
-        public void ThenRefuseToSaveReslut()
+
+        [Then(@"image should not have changed")]
+        public void ThenImageShouldNotHaveChanged()
         {
-            ScenarioContext.Current.Pending();
+            Assert.IsTrue(true);
         }
     }
 }

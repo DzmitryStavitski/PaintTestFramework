@@ -3,22 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NLog;
+using System.Windows.Automation;
+using Framework.Application;
+using TestStack.White;
+using TestStack.White.UIItems;
+using TestStack.White.UIItems.Actions;
+using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.WindowItems;
 
-namespace Framework.Elements
+namespace Framework.elements
 {
-    public abstract class BaseElement
+    public class BaseElement<T> where T : UIItem
     {
-        protected string elementID;
-        protected static ILogger logger = LogManager.GetCurrentClassLogger();
-        protected Application.Application application;
+        protected static App _app = App.GetApplication();
+        protected static T Uitem;
+        protected static Window defaultWindow = _app.GetWindow();
 
-        public BaseElement(Application.Application application, string elementID)
+        public BaseElement(T uiItem)
         {
-            this.application = application;
-            this.elementID = elementID;
+            Uitem = uiItem;
         }
 
-        public abstract void click();
+        public static UIItem Find(TreeScope treeScope, AutomationProperty property, object value)
+        {
+            UIItem element =
+                new UIItem(_app.GetWindow().AutomationElement.FindFirst(treeScope, new PropertyCondition(property, value)),
+                    new NullActionListener());
+            return element;
+        }
+
+        public static T Find(SearchCriteria searchCriteria, Window window = null)
+        {
+            if (window == null)
+            {
+                window = defaultWindow;
+            }
+
+            try
+            {
+                Uitem = _app.GetWindow().Get<T>(searchCriteria);
+                return Uitem;
+            }
+            catch (AutomationException ex)
+            {
+                
+            }
+
+            return Uitem;
+        }
+
+        public void Click()
+        {
+            Uitem.Click();
+        }
+
+        public static UIItem FindItemByIndex(TreeScope treeScope, Condition condition, int index)
+        {
+            var elements = defaultWindow.AutomationElement.FindAll(treeScope, condition);
+            UIItem element = null;
+            for (var i = 0; i < elements.Count; i++)
+            {
+                if (i == index)
+                {
+                    element = new UIItem(elements[i], new NullActionListener());
+                }
+            }
+            return element;
+        }
     }
 }

@@ -63,15 +63,29 @@
     <Reference Include="UIAutomationTypes" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Application.cs" />
-    <Compile Include="Elements\BaseElement.cs" />
-    <Compile Include="Elements\Button.cs" />
-    <Compile Include="Elements\MenuItem.cs" />
-    <Compile Include="Elements\TextBox.cs" />
+    <Compile Include="application\App.cs" />
+    <Compile Include="elements\BaseElement.cs" />
+    <Compile Include="elements\Button.cs" />
+    <Compile Include="elements\MenuItem.cs" />
+    <Compile Include="elements\TextBox.cs" />
+    <Compile Include="pages\FileMenuView.cs" />
+    <Compile Include="pages\MainPage.cs" />
+    <Compile Include="pages\OpenFilePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="utils\ProcessUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

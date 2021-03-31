@@ -3,43 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Automation;
-using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowItems;
 
-namespace Framework.Elements
+namespace Framework.elements
 {
-    public class TextBox : BaseElement
+    public class TextBox : BaseElement<TestStack.White.UIItems.TextBox>
     {
-        public TextBox(Application.Application application, string elementID)
-            : base(application, elementID)
+        protected TextBox(TestStack.White.UIItems.TextBox uiItem) : base(uiItem)
         {
 
         }
 
-        public override void click()
+        public static TextBox Get(SearchCriteria searchCriteria, string itemName, Window window = null)
         {
-            logger.Debug($"Clicking on Button (element ID = {elementID})");
-
-            var button = application.getApplicationWindow().Get<TestStack.White.UIItems.TextBox>(SearchCriteria.ByAutomationId(elementID.ToString()));
-            if (button != null) button.Click();
+            return new TextBox(Find(searchCriteria, window));
         }
 
-        public string returnText()
+        public void BulkText(string text)
         {
-            logger.Debug($"Returning text from TextBox (element ID = {elementID})");
-
-            return
-                application.getApplicationWindow().Get<Label>(SearchCriteria.ByAutomationId(elementID.ToString())).AutomationElement.
-                    GetCurrentPropertyValue(System.Windows.Automation.AutomationElement.NameProperty).ToString();
-        }
-
-        public void EnterText(string text)
-        {
-            Window window = application.getLastOpenedWindow();
-            var textBox = window.Get<TestStack.White.UIItems.TextBox>(SearchCriteria.ByAutomationId(elementID));
-            textBox.Enter(text);
+            Uitem.BulkText = text;
         }
     }
 }
