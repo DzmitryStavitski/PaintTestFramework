@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Framework.Properties;
+using Framework.utils;
 using NLog;
 using TestStack.White.UIItems.WindowItems;
 
@@ -16,7 +17,7 @@ namespace Framework.Application
         private static App _instance;
         private static TestStack.White.Application _application;
         private static Window _mainWindow;
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LoggerUtil.GetLogger();
 
         private App()
         { }

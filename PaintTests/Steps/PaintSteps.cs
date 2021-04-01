@@ -10,31 +10,24 @@ namespace PaintTests.Steps
     [Binding]
     public class PaintSteps
     {
-
-        [Given(@"Paint is open")]
+        [Given(@"I open the Paint")]
         public void GivenPaintIsOpen()
         {
-            Assert.IsTrue(true);
-        }
-        
-        [Given(@"all old instance were closed")]
-        public void GivenAllOldInstanceWereClosed()
-        {
-            Assert.IsTrue(true);
+            Assert.IsTrue(MainPage.IsMainWindowOpened());
         }
         
         [When(@"I open an image ""(.*)"" from ""(.*)""")]
         public void WhenIOpenAnImageFrom(string imageName, string path)
         {
-            string imageFullPath = Path.Combine(path, imageName);
-            Bitmap image = new Bitmap(Image.FromFile(imageFullPath));
+            var imageFullPath = Path.Combine(path, imageName);
+            var image = new Bitmap(Image.FromFile(imageFullPath));
             
             ScenarioContext.Current.Add("image", image);
             ScenarioContext.Current.Add("imagePath", imageFullPath);
 
             MainPage.ButtonFile.Click();
-            FileMenuView.MenuItemOpen.Click();
-            OpenFilePage.TextBoxFilePath.BulkText(Path.Combine(path, imageName));
+            FileMenuPage.OpenMenu.Click();
+            OpenFilePage.TextBoxFilePath.BulkText(imageFullPath);
             OpenFilePage.ButtonOpenFile.Click();
         }
 

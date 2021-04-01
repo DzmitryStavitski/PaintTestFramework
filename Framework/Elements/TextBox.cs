@@ -10,7 +10,7 @@ namespace Framework.elements
 {
     public class TextBox : BaseElement<TestStack.White.UIItems.TextBox>
     {
-        protected TextBox(TestStack.White.UIItems.TextBox uiItem) : base(uiItem)
+        public TextBox(TestStack.White.UIItems.TextBox uiItem) : base(uiItem)
         {
 
         }

@@ -16,10 +16,15 @@ namespace PaintTests.pages
         public static Button ButtonDoNotSave =>
             Button.Get(SearchCriteria.ByAutomationId("CommandButton_7"), App.GetApplication().GetWindow().ModalWindow("Paint"));
         public static MenuItem MenuItemSelectAll => 
-            MenuItem.Get(SearchCriteria.ByControlType(ControlType.MenuItem).AndByText("Select all"), "Select all");
+            MenuItem.Get(SearchCriteria.ByControlType(ControlType.MenuItem).AndByText("Select all"));
         public static UIItem ButtonSelect => BaseElement<TestStack.White.UIItems.Button>.
             FindItemByIndex(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "Select"), 2);
         public static Button ButtonCut =>
             Button.Get(SearchCriteria.ByText("Cut"));
+
+        public static bool IsMainWindowOpened()
+        {
+            return ButtonClose.IsElementExist();
+        }
     }
 }

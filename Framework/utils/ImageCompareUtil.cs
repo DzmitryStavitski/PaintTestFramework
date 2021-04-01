@@ -16,6 +16,9 @@ namespace Framework.utils
 
         public static bool CompareImages(Bitmap b1, Bitmap b2)
         {
+            LoggerUtil.GetLogger().Debug("Comparing images");
+
+
             if ((b1 == null) != (b2 == null)) return false;
             if (b1.Size != b2.Size) return false;
 

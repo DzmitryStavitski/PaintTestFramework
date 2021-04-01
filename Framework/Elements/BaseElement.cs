@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
 using Framework.Application;
+using Framework.utils;
 using TestStack.White;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.Actions;
@@ -15,6 +16,8 @@ namespace Framework.elements
 {
     public class BaseElement<T> where T : UIItem
     {
+        private static NLog.Logger logger = LoggerUtil.GetLogger();
+
         protected static App _app = App.GetApplication();
         protected static T Uitem;
         protected static Window defaultWindow = _app.GetWindow();
@@ -26,6 +29,8 @@ namespace Framework.elements
 
         public static UIItem Find(TreeScope treeScope, AutomationProperty property, object value)
         {
+            logger.Debug($"Searching Element by treeScope ({treeScope}), property({property}), value({value})");
+
             UIItem element =
                 new UIItem(_app.GetWindow().AutomationElement.FindFirst(treeScope, new PropertyCondition(property, value)),
                     new NullActionListener());
@@ -34,6 +39,8 @@ namespace Framework.elements
 
         public static T Find(SearchCriteria searchCriteria, Window window = null)
         {
+            logger.Debug("Searching Element by searchCriteria, window");
+
             if (window == null)
             {
                 window = defaultWindow;
@@ -52,13 +59,10 @@ namespace Framework.elements
             return Uitem;
         }
 
-        public void Click()
-        {
-            Uitem.Click();
-        }
-
         public static UIItem FindItemByIndex(TreeScope treeScope, Condition condition, int index)
         {
+            logger.Debug($"Searching Element by Index");
+
             var elements = defaultWindow.AutomationElement.FindAll(treeScope, condition);
             UIItem element = null;
             for (var i = 0; i < elements.Count; i++)
@@ -69,6 +73,17 @@ namespace Framework.elements
                 }
             }
             return element;
+        }
+
+        public bool IsElementExist()
+        {
+            return Uitem.Visible;
+        }
+
+        public void Click()
+        {
+            logger.Debug("Click on Element");
+            Uitem.Click();
         }
     }
 }

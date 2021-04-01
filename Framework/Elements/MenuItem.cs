@@ -11,14 +11,14 @@ namespace Framework.elements
 {
     public class MenuItem : BaseElement<Menu>
     {
-        protected MenuItem(Menu uiItem, string itemName) : base(uiItem)
+        public MenuItem(Menu uiItem) : base(uiItem)
         {
 
         }
 
-        public static MenuItem Get(SearchCriteria searchCriteria, string itemName, Window window = null)
+        public static MenuItem Get(SearchCriteria searchCriteria, Window window = null)
         {
-            return new MenuItem(Find(searchCriteria, window), itemName);
+            return new MenuItem(Find(searchCriteria, window));
         }
     }
 }

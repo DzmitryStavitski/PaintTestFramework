@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Framework.Application;
+using Framework.Properties;
 using Framework.utils;
 using Gherkin;
 using TechTalk.SpecFlow;
@@ -17,6 +18,7 @@ namespace PaintTests.Hooks
         [BeforeScenario]
         public void BeforeScenario()
         {
+            ProcessUtil.CloseAllProcessesByName(Settings.Default.ProcessName);
             _app.Run();
         }
 
