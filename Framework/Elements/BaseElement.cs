@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Automation;
 using Framework.Application;
 using Framework.utils;
+using NLog;
 using TestStack.White;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.Actions;
@@ -16,7 +17,7 @@ namespace Framework.elements
 {
     public class BaseElement<T> where T : UIItem
     {
-        private static NLog.Logger logger = LoggerUtil.GetLogger();
+        private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         protected static App _app = App.GetApplication();
         protected static T Uitem;
@@ -29,7 +30,7 @@ namespace Framework.elements
 
         public static UIItem Find(TreeScope treeScope, AutomationProperty property, object value)
         {
-            logger.Debug($"Searching Element by treeScope ({treeScope}), property({property}), value({value})");
+            Logger.Debug($"Searching Element by treeScope ({treeScope}), property({property}), value({value})");
 
             UIItem element =
                 new UIItem(_app.GetWindow().AutomationElement.FindFirst(treeScope, new PropertyCondition(property, value)),
@@ -39,7 +40,7 @@ namespace Framework.elements
 
         public static T Find(SearchCriteria searchCriteria, Window window = null)
         {
-            logger.Debug("Searching Element by searchCriteria, window");
+            Logger.Debug("Searching Element by searchCriteria, window");
 
             if (window == null)
             {
@@ -61,7 +62,7 @@ namespace Framework.elements
 
         public static UIItem FindItemByIndex(TreeScope treeScope, Condition condition, int index)
         {
-            logger.Debug($"Searching Element by Index");
+            Logger.Debug($"Searching Element by Index");
 
             var elements = defaultWindow.AutomationElement.FindAll(treeScope, condition);
             UIItem element = null;
@@ -82,7 +83,7 @@ namespace Framework.elements
 
         public void Click()
         {
-            logger.Debug("Click on Element");
+            Logger.Debug("Click on Element");
             Uitem.Click();
         }
     }

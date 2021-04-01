@@ -10,7 +10,7 @@ namespace Framework.utils
 {
     public static class ProcessUtil
     {
-        private static NLog.Logger Logger = LoggerUtil.GetLogger();
+        private static readonly Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public static void CloseAllProcessesByName(string name)
         {
             Logger.Debug($"Kill all proccess with name = {name}");

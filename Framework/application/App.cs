@@ -17,7 +17,7 @@ namespace Framework.Application
         private static App _instance;
         private static TestStack.White.Application _application;
         private static Window _mainWindow;
-        private static readonly ILogger Logger = LoggerUtil.GetLogger();
+        private static readonly ILogger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private App()
         { }

@@ -15,9 +15,8 @@ namespace Framework.utils
         private static extern int memcmp(IntPtr b1, IntPtr b2, long count);
 
         public static bool CompareImages(Bitmap b1, Bitmap b2)
-        {
-            LoggerUtil.GetLogger().Debug("Comparing images");
-
+        { 
+            NLog.LogManager.GetCurrentClassLogger().Debug("Comparing images");
 
             if ((b1 == null) != (b2 == null)) return false;
             if (b1.Size != b2.Size) return false;
